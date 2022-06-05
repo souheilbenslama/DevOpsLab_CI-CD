@@ -1,13 +1,9 @@
-FROM node:18-bullseye
 
-WORKDIR /app
-
-COPY package*.json .
-
+FROM node:16
+WORKDIR /usr/src/app
+COPY package*.json ./
 RUN npm install
-
 COPY . .
-
 EXPOSE 3000
-
-CMD npm start
+ENV VAR_NAME=var_value
+CMD [ "node", "app.js" ]
