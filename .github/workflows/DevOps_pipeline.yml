@@ -37,3 +37,23 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/petsi_node:${{ github.sha }}
+  Deploy:
+      needs: Build
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Deploy in EC2
+          env:
+            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
+            HOSTNAME: ${{ secrets.EC2_HOSTNAME }}
+            USER_NAME: ubuntu
+
+          run: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+              sudo docker container stop petsi_node
+              sudo docker container rm petsi_node
+              sudo docker image rm ${{ secrets.DOCKER_HUB_USERNAME }}/petsi_node
+              sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/petsi_node
+              sudo docker run -d -p 3000:3000 --name petsi_node ${{ secrets.DOCKER_HUB_USERNAME }}/nestjs-template
+            '
