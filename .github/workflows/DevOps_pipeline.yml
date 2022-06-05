@@ -1,8 +1,5 @@
 name: Petsibackend DevOps pipeline
 on: [push]
-
-env:
-
 jobs:
   Test:
     runs-on: ubuntu-latest
