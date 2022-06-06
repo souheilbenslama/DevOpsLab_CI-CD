@@ -24,6 +24,8 @@ expected_user={
 }
    result=profileController.getProfile(req)
    console.log(result)
+   console.log("result")
+   
         await expect(result == expected_user);
     });
 });
