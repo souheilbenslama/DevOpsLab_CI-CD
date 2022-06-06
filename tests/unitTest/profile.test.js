@@ -24,7 +24,7 @@ expected_user={
 }
    result=profileController.getProfile(req)
    console.log(result)
-   console.log("result pendsqdfing")
+   console.log("result pendsqdfing o")
    
         await expect(result == expected_user);
     });
