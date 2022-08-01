@@ -1,6 +1,6 @@
 # DevOpsLab_CI-CD
 
-### a node js project  
-### deploy using  ECS 
+
+## a ci/cd of  node js app for pet management  deployed using AWS ECS 
 
 
